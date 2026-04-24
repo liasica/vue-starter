@@ -2,7 +2,7 @@
 
 用于快速初始化 Vue 项目基础配置的脚本集合。
 
-脚本会先创建 Vue 项目，`create-vue` 保持交互式流程；创建成功后自动进入目录继续执行初始化，并交互式选择使用 UnoCSS 或 Tailwind。
+脚本会先创建 Vue 项目，`create-vue` 保持交互式流程；创建成功后自动进入目录继续执行初始化，并交互式选择使用 Tailwind CSS 或 UnoCSS。
 
 ## 使用方式
 
@@ -13,10 +13,10 @@ curl -fsSL https://raw.githubusercontent.com/liasica/vue-starter/master/install.
 ## 说明
 
 - 默认直接进入 `create-vue` 交互流程，由它询问项目名和项目特性。
-- Vue 项目创建完成后，脚本会继续以接近 `create-vue` 的交互式提示让你选择 `UnoCSS` 或 `Tailwind CSS`。
+- Vue 项目创建完成后，脚本会继续以接近 `create-vue` 的交互式提示让你选择 `Tailwind CSS` 或 `UnoCSS`，默认高亮 Tailwind CSS。
 - 样式菜单支持 `←/→`、`↑/↓`、空格、`h/j/k/l`、`1/2` 和回车确认。
 - 如有需要，也可以通过 `bash -s -- my-app` 预先传入项目目录名。
-- 如需跳过样式选择交互，也可以通过 `bash -s -- my-app unocss` 或 `bash -s -- my-app tailwind` 直接指定。
+- 如需跳过样式选择交互，也可以通过 `bash -s -- my-app tailwind` 或 `bash -s -- my-app unocss` 直接指定。
 
 ## Claude / Codex Skill
 

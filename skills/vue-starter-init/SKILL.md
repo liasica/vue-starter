@@ -38,8 +38,8 @@ allowed-tools: Bash(curl -fsSL https://raw.githubusercontent.com/liasica/vue-sta
 |------|------|
 | 完全交互式（推荐） | `curl -fsSL https://raw.githubusercontent.com/liasica/vue-starter/master/install.sh \| bash` |
 | 指定项目目录名 | `curl -fsSL https://raw.githubusercontent.com/liasica/vue-starter/master/install.sh \| bash -s -- my-app` |
-| 指定项目名 + UnoCSS | `curl -fsSL https://raw.githubusercontent.com/liasica/vue-starter/master/install.sh \| bash -s -- my-app unocss` |
 | 指定项目名 + Tailwind | `curl -fsSL https://raw.githubusercontent.com/liasica/vue-starter/master/install.sh \| bash -s -- my-app tailwind` |
+| 指定项目名 + UnoCSS | `curl -fsSL https://raw.githubusercontent.com/liasica/vue-starter/master/install.sh \| bash -s -- my-app unocss` |
 
 ## Usage Flow
 
@@ -59,7 +59,7 @@ allowed-tools: Bash(curl -fsSL https://raw.githubusercontent.com/liasica/vue-sta
    如果用户已经指定了项目名和样式方案，直接传参避免额外交互：
 
    ```bash
-   curl -fsSL https://raw.githubusercontent.com/liasica/vue-starter/master/install.sh | bash -s -- my-app unocss
+   curl -fsSL https://raw.githubusercontent.com/liasica/vue-starter/master/install.sh | bash -s -- my-app tailwind
    ```
 
 3. **让 `create-vue` 负责框架问题**
@@ -67,21 +67,21 @@ allowed-tools: Bash(curl -fsSL https://raw.githubusercontent.com/liasica/vue-sta
    - 让用户按需勾选即可
 
 4. **样式方案选择**
-   - 如果第二个参数已给定 `unocss` 或 `tailwind`，跳过菜单
-   - 否则脚本会弹出交互菜单（`←/→`、`↑/↓`、`h/j/k/l`、`1/2`、空格切换，回车确认）
+   - 如果第二个参数已给定 `tailwind` 或 `unocss`，跳过菜单
+   - 否则脚本会弹出交互菜单（`←/→`、`↑/↓`、`h/j/k/l`、`1/2`、空格切换，回车确认），**默认高亮 Tailwind CSS**
 
 5. **脚本自动完成的收尾**
    - `pnpm install -D` 写入 lint/style 相关 devDependencies
    - 生成/覆盖 `vite.config.ts`
    - 写入 `eslint.config.ts`、`stylelint.config.js`、`.stylelintignore`
-   - UnoCSS → 写入 `uno.config.ts`；Tailwind → 写入 `src/assets/main.css`
+   - Tailwind → 写入 `src/assets/main.css`；UnoCSS → 写入 `uno.config.ts`
 
 ## Arguments Reference
 
 | 位置 | 名称 | 可选值 | 说明 |
 |------|------|--------|------|
 | `$1` | `project_name` | 任意合法目录名 | 留空则由 `create-vue` 交互询问 |
-| `$2` | `style_solution` | `unocss` \| `uno` \| `tailwind` \| `tailwindcss` | 留空则弹出交互菜单；大小写不敏感 |
+| `$2` | `style_solution` | `tailwind` \| `tailwindcss` \| `unocss` \| `uno` | 留空则弹出交互菜单（默认高亮 Tailwind）；大小写不敏感 |
 
 ## Expected Result
 
@@ -93,8 +93,8 @@ my-app/
 ├── stylelint.config.js
 ├── .stylelintignore
 ├── vite.config.ts
-├── uno.config.ts          # UnoCSS 方案
 ├── src/assets/main.css    # Tailwind 方案
+├── uno.config.ts          # UnoCSS 方案
 ├── package.json
 ├── src/
 └── ...（create-vue 生成的其余文件）
@@ -119,12 +119,12 @@ pnpm build     # 生产构建
 | 担心覆盖 `create-vue` 生成的 `vite.config.ts` | 这是预期行为：脚本会重写 `vite.config.ts` 以注入样式插件与 `@` 别名 |
 | 认为脚本会提交 git | 脚本只生成文件，不做 `git init` 额外操作（`create-vue` 自身可能已初始化） |
 
-## Decision: UnoCSS vs Tailwind
+## Decision: Tailwind vs UnoCSS
 
-- **UnoCSS**：原子 CSS，支持 presetAttributify（`bg-red-500` 可写成属性 `bg="red-500"`），打包更小，IDE 插件生态略弱
 - **Tailwind**：生态最成熟，文档丰富，团队熟悉度通常更高，默认配置更贴近主流社区
+- **UnoCSS**：原子 CSS，支持 presetAttributify（`bg-red-500` 可写成属性 `bg="red-500"`），打包更小，IDE 插件生态略弱
 
-用户没有偏好时，推荐 **UnoCSS**（脚本默认高亮选项），因为本 starter 的默认 ESLint 配置对 UnoCSS 有 `@unocss/eslint-config` 支持。
+用户没有偏好时，推荐 **Tailwind CSS**（脚本默认高亮选项）。若明确追求更小打包或原子属性化写法，再选 UnoCSS。
 
 ## Reference
 

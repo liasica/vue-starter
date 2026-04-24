@@ -44,13 +44,13 @@ select_style_solution() {
   local -a option_labels option_values
 
   if [[ ! -r /dev/tty || ! -w /dev/tty ]]; then
-    echo 'Interactive style selection requires a terminal. Pass the style as the second argument: unocss or tailwind.' >&2
+    echo 'Interactive style selection requires a terminal. Pass the style as the second argument: tailwind or unocss.' >&2
     return 1
   fi
 
   prompt='Use CSS solution?'
-  option_labels=('UnoCSS' 'Tailwind CSS')
-  option_values=('unocss' 'tailwind')
+  option_labels=('Tailwind CSS' 'UnoCSS')
+  option_values=('tailwind' 'unocss')
   selected_index=0
   line_count=5
 
@@ -594,7 +594,7 @@ EOF
 style_solution="$(normalize_style_solution "$style_solution")"
 
 if [[ "$style_solution" == 'unsupported' ]]; then
-  echo 'Unsupported style solution. Use unocss or tailwind.' >&2
+  echo 'Unsupported style solution. Use tailwind or unocss.' >&2
   exit 1
 fi
 
